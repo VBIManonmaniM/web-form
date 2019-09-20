@@ -87,23 +87,40 @@ export class WebForm extends Component {
             return message + 'Job Title';
         }
 
-        // if (!resume) {
-        //     return 'Please upload a resume';
-        // }
+        if (!resume) {
+            return 'Please upload a resume';
+        }
 
         return null;
     }
 
-    saveForm = () => {
+    saveForm = async () => {
+        const {user} = this.state;
         const inValidKeyMessage = this.validateForm();
         if (inValidKeyMessage === null) {
-            this.setState({
-                openBar: true,
-                message: {
-                    errorStatus: false,
-                    text: `Details added successfully !`
+            try {
+                let payload = new FormData();
+                for (const key in user) {
+                    payload.append(key, user[key]);
                 }
-            });
+                const status = await Axios.post("http://localhost:8000/addUserDetails", payload);
+                this.setState({
+                    openBar: true,
+                    message: {
+                        errorStatus: false,
+                        text: `Details added successfully !`
+                    }
+                });
+            } catch(e) {
+                debugger
+                this.setState({
+                    openBar: true,
+                    message: {
+                        errorStatus: true,
+                        text: `Server error !`
+                    }
+                });
+            }
         } else {
             this.setState({
                 openBar: true,
@@ -195,7 +212,9 @@ export class WebForm extends Component {
                         accept="application/msword,application/pdf"
                         style={{ display: 'none' }}
                         id="raised-button-file"
-                        multiple
+                        onChange={(e) => {
+                            this.handleChange('resume', e.target.files[0]);
+                        }}
                         type="file"
                     />
                     <label htmlFor="raised-button-file">
@@ -203,7 +222,7 @@ export class WebForm extends Component {
                             Upload Resume
                         </Button>
                     </label>
-                    <span style={{ marginTop: '0.4rem' }}>Mano.pdf</span>
+                    <span style={{ marginTop: '0.4rem' }}>{resume ? resume.name : ''}</span>
                 </Box>
                 <div>
                     <Button variant="contained" onClick={this.clearForm}>
