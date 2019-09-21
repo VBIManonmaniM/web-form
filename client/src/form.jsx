@@ -166,9 +166,13 @@ export class WebForm extends Component {
     }
 
     onClose = () => {
-        this.setState({
-            openBar: false
-        });
+        if (this.state.message.errorStatus) {
+            this.setState({
+                openBar: false
+            });
+        } else {
+            this.clearForm();
+        }
     }
 
     render() {
@@ -222,7 +226,6 @@ export class WebForm extends Component {
                     }}
                 />
                 <TextField
-                    error={!jobTitle}
                     id="jobTitle"
                     label="Job Title"
                     margin="normal"
