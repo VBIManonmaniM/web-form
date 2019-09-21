@@ -1,0 +1,8 @@
+{
+  "name": "web-form",
+  "version": "0.1.0",
+  "private": false,
+  "scripts": {
+    "deploy": "cd client && npm run build && cd ../server && node server.js"
+  }
+}
