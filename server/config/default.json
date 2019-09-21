@@ -1,7 +1,6 @@
 {
     "dbConfig": {
-        "host": "localhost",
-        "port": 5984
+        "url": "mongodb+srv://admin:admin@cluster0-axinm.mongodb.net/userdetails?retryWrites=true&w=majority"
     },
     "serverConfig": {
         "host": "localhost",

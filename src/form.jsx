@@ -95,7 +95,7 @@ export class WebForm extends Component {
     }
 
     saveForm = async () => {
-        const {user} = this.state;
+        const { user } = this.state;
         const inValidKeyMessage = this.validateForm();
         if (inValidKeyMessage === null) {
             try {
@@ -103,15 +103,24 @@ export class WebForm extends Component {
                 for (const key in user) {
                     payload.append(key, user[key]);
                 }
-                const status = await Axios.post("http://localhost:8000/addUserDetails", payload);
+                const data = await Axios.post("http://localhost:8000/addUserDetails", payload);
+                debugger
+                let message = '', errorStatus;
+                if (data.status === 201) {
+                    errorStatus = false;
+                    message = `Details added successfully !`;
+                } else if (data.data.message === 'dberror') {
+                    errorStatus = true;
+                    message = `DB Error`;
+                }
                 this.setState({
                     openBar: true,
                     message: {
-                        errorStatus: false,
-                        text: `Details added successfully !`
+                        errorStatus: errorStatus,
+                        text: message
                     }
                 });
-            } catch(e) {
+            } catch (e) {
                 debugger
                 this.setState({
                     openBar: true,
