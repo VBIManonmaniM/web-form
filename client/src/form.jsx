@@ -38,6 +38,17 @@ export class WebForm extends Component {
         };
     }
 
+    getRefreshCount = () => {
+        const refreshCount = Number(document.cookie.split("=")[1]);
+        if (!isNaN(refreshCount)) {
+            document.cookie = `refreshCount=${refreshCount + 1};`;
+            return refreshCount + 1;
+        } else {
+            document.cookie = 'refreshCount=1;';
+            return 1;
+        }
+    }
+
     clearForm = () => {
         this.setState({
             user: {
@@ -164,6 +175,9 @@ export class WebForm extends Component {
         const { errorStatus, text } = this.state.message;
         return <Container maxWidth="sm">
             <Box m="1rem" display="flex" flexDirection="column">
+                <Box display="flex" justifyContent="flex-end">
+                    <span>Visit count : {this.getRefreshCount()}</span>
+                </Box>
                 <TextField
                     id="name"
                     label="Name"
