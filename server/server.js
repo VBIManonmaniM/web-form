@@ -23,9 +23,14 @@ app.use(upload.any());
 // to handle the incoming request
 app.post('/addUserDetails', async (req, res) => {
     try {
+        const resume = req.files[0];
         await User.create({
             ...req.body,
-            resume: req.files[0].buffer
+            resume: {
+                data: resume.buffer,
+                contentType: resume.mimetype,
+                name: resume.originalname
+            }
         });
         res.sendStatus(201);
     } catch(e) {

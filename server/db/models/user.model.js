@@ -18,9 +18,9 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     resume: {
-        type: Buffer,
         data: Buffer,
-        contentType: String
+        contentType: String,
+        name: String
     }
 })
 
