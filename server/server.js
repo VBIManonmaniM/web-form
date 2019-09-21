@@ -19,7 +19,7 @@ app.use(cors());
 app.use(bodyParser.json({}));
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(upload.any());
-app.use(express.static('../build'));
+app.use(express.static('../client/build'));
 
 app.post('/addUserDetails', addUserDetails);
 
