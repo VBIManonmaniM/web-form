@@ -11,8 +11,7 @@ const serverConfig = config.get('serverConfig');
 const connect = require('./db/connect');
 // Connect to mongodb
 connect(dbConfig.url);
-
-const User = require('./db/models/user.model');
+const addUserDetails = require('./db/user-crud');
 
 // Loading necessary middlewares
 app.use(cors());
@@ -21,24 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.any());
 
 // to handle the incoming request
-app.post('/addUserDetails', async (req, res) => {
-    try {
-        const resume = req.files[0];
-        await User.create({
-            ...req.body,
-            resume: {
-                data: resume.buffer,
-                contentType: resume.mimetype,
-                name: resume.originalname
-            }
-        });
-        res.sendStatus(201);
-    } catch(e) {
-        res.send({
-            message: 'dberror'
-        });
-    }
-});
+app.post('/addUserDetails', addUserDetails);
 
 app.listen(serverConfig.port, () => {
     console.log(`Listening at ${serverConfig.port}`);
