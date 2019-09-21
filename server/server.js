@@ -25,7 +25,7 @@ app.post('/addUserDetails', async (req, res) => {
     try {
         await User.create({
             ...req.body,
-            resume: req.files[0]
+            resume: req.files[0].buffer
         });
         res.sendStatus(201);
     } catch(e) {
