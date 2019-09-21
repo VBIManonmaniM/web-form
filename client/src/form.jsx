@@ -22,6 +22,7 @@ import './form.css';
 export class WebForm extends Component {
     constructor(props) {
         super(props);
+        this.refreshCount = this.getRefreshCount();
         this.state = {
             user: {
                 name: 'Mano',
@@ -114,7 +115,7 @@ export class WebForm extends Component {
                 for (const key in user) {
                     payload.append(key, user[key]);
                 }
-                const data = await Axios.post("http://localhost:8000/addUserDetails", payload);
+                const data = await Axios.post(`${window.location.href}addUserDetails`, payload);
                 debugger
                 let message = '', errorStatus;
                 if (data.status === 201) {
@@ -176,7 +177,7 @@ export class WebForm extends Component {
         return <Container maxWidth="sm">
             <Box m="1rem" display="flex" flexDirection="column">
                 <Box display="flex" justifyContent="flex-end">
-                    <span>Visit count : {this.getRefreshCount()}</span>
+                    <span>Visit count : {this.refreshCount}</span>
                 </Box>
                 <TextField
                     id="name"
