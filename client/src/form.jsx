@@ -10,6 +10,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Mail from '@material-ui/icons/Mail';
 import ContactPhone from '@material-ui/icons/Phone';
@@ -36,7 +37,8 @@ export class WebForm extends Component {
                 errorStatus: false,
                 text: ''
             },
-            openBar: false
+            openBar: false,
+            showLoading: false
         };
     }
 
@@ -116,8 +118,13 @@ export class WebForm extends Component {
                 for (const key in user) {
                     payload.append(key, user[key]);
                 }
+                this.setState({
+                    showLoading: true
+                });
                 const data = await Axios.post(`${window.location.href}addUserDetails`, payload);
-                debugger
+                this.setState({
+                    showLoading: false
+                });
                 let message = '', errorStatus;
                 if (data.status === 201) {
                     errorStatus = false;
@@ -134,7 +141,9 @@ export class WebForm extends Component {
                     }
                 });
             } catch (e) {
-                debugger
+                this.setState({
+                    showLoading: false
+                });
                 this.setState({
                     openBar: true,
                     message: {
@@ -254,7 +263,8 @@ export class WebForm extends Component {
                         <span style={{ marginTop: '0.4rem' }}>{resume ? resume.name : ''}</span>
                     </Box>
                     <Box display="flex" mt='1rem' justifyContent="flex-end">
-                        <Button variant="contained" onClick={this.clearForm}>
+                        {this.state.showLoading ? <CircularProgress /> : null}
+                        <Button style={{ marginLeft: '0.4rem' }} variant="contained" onClick={this.clearForm}>
                             Clear
                         </Button>
                         <Button style={{ marginLeft: '0.4rem' }} variant="contained" color="primary" onClick={this.saveForm}>
