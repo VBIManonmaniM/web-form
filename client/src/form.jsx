@@ -9,6 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
 
 import Mail from '@material-ui/icons/Mail';
 import ContactPhone from '@material-ui/icons/Phone';
@@ -179,113 +180,116 @@ export class WebForm extends Component {
         const { name, phoneNo, emailId, jobTitle, resume } = this.state.user;
         const { errorStatus, text } = this.state.message;
         return <Container maxWidth="sm">
-            <Box m="1rem" display="flex" flexDirection="column">
-                <Box display="flex" justifyContent="flex-end">
-                    <span>Visit count : {this.refreshCount}</span>
-                </Box>
-                <TextField
-                    id="name"
-                    label="Name"
-                    margin="normal"
-                    onChange={(e) => {
-                        this.handleChange('name', e.target.value);
-                    }}
-                    value={name}
-                />
-                <TextField
-                    id="phoneNo"
-                    label="Phone Number"
-                    margin="normal"
-                    value={phoneNo}
-                    onChange={(e) => {
-                        this.handleChange('phoneNo', e.target.value);
-                    }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="start">
-                                <ContactPhone />
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-                <TextField
-                    required
-                    id="emailId"
-                    label="Email ID"
-                    margin="normal"
-                    value={emailId}
-                    onChange={(e) => {
-                        this.handleChange('emailId', e.target.value);
-                    }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="start">
-                                <Mail />
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-                <TextField
-                    id="jobTitle"
-                    label="Job Title"
-                    margin="normal"
-                    onChange={(e) => {
-                        this.handleChange('jobTitle', e.target.value);
-                    }}
-                    value={jobTitle}
-                />
-                <Box display="flex">
-                    <input
-                        accept="application/msword,application/pdf"
-                        style={{ display: 'none' }}
-                        id="raised-button-file"
+            <Paper style={{ marginTop: '2rem', padding: '4rem' }}>
+                <Box m="1rem" display="flex" flexDirection="column">
+                    <Box display="flex" justifyContent="flex-end">
+                        <span>Visit count : <b>{this.refreshCount}</b></span>
+                    </Box>
+                    <TextField
+                        id="name"
+                        label="Name"
+                        margin="normal"
                         onChange={(e) => {
-                            this.handleChange('resume', e.target.files[0]);
+                            this.handleChange('name', e.target.value);
                         }}
-                        type="file"
+                        value={name}
                     />
-                    <label htmlFor="raised-button-file">
-                        <Button variant="raised" component="span">
-                            Upload Resume
+                    <TextField
+                        id="phoneNo"
+                        label="Phone Number"
+                        margin="normal"
+                        value={phoneNo}
+                        onChange={(e) => {
+                            this.handleChange('phoneNo', e.target.value);
+                        }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="start">
+                                    <ContactPhone />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                    <TextField
+                        required
+                        id="emailId"
+                        label="Email ID"
+                        margin="normal"
+                        value={emailId}
+                        onChange={(e) => {
+                            this.handleChange('emailId', e.target.value);
+                        }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="start">
+                                    <Mail />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                    <TextField
+                        id="jobTitle"
+                        label="Job Title"
+                        margin="normal"
+                        onChange={(e) => {
+                            this.handleChange('jobTitle', e.target.value);
+                        }}
+                        value={jobTitle}
+                    />
+                    <Box mt="0.7rem" display="flex">
+                        <input
+                            accept="application/msword,application/pdf"
+                            style={{ display: 'none' }}
+                            id="raised-button-file"
+                            onChange={(e) => {
+                                this.handleChange('resume', e.target.files[0]);
+                            }}
+                            type="file"
+                        />
+                        <label htmlFor="raised-button-file">
+                            <Button variant="raised" component="span">
+                                Upload Resume
                         </Button>
-                    </label>
-                    <span style={{ marginTop: '0.4rem' }}>{resume ? resume.name : ''}</span>
+                        </label>
+                        <span style={{ marginTop: '0.4rem' }}>{resume ? resume.name : ''}</span>
+                    </Box>
+                    <Box display="flex" mt='1rem' justifyContent="flex-end">
+                        <Button variant="contained" onClick={this.clearForm}>
+                            Clear
+                        </Button>
+                        <Button style={{ marginLeft: '0.4rem' }} variant="contained" color="primary" onClick={this.saveForm}>
+                            Save
+                        </Button>
+                    </Box>
                 </Box>
-                <div>
-                    <Button variant="contained" onClick={this.clearForm}>
-                        Clear
-                    </Button>
-                    <Button variant="contained" color="primary" onClick={this.saveForm}>
-                        Save
-                    </Button>
-                </div>
-            </Box>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                open={this.state.openBar}
-                autoHideDuration={3000}
-            >
-                <SnackbarContent
-                    className={errorStatus ? 'error-message' : 'success-message'}
-                    message={
-                        <span id="client-snackbar" style={{
-                            display: 'flex',
-                            alignItems: 'center'
-                        }}>
-                            {errorStatus ? <ErrorIcon /> : <CheckCircleIcon />}
-                            {text}
-                        </span>
-                    }
-                    action={[
-                        <IconButton onClick={this.onClose} key="close" aria-label="close" color="inherit">
-                            <CloseIcon />
-                        </IconButton>,
-                    ]}
-                />
-            </Snackbar>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    open={this.state.openBar}
+                    onClose={this.onClose}
+                    autoHideDuration={3000}
+                >
+                    <SnackbarContent
+                        className={errorStatus ? 'error-message' : 'success-message'}
+                        message={
+                            <span id="client-snackbar" style={{
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}>
+                                {errorStatus ? <ErrorIcon /> : <CheckCircleIcon />}
+                                {text}
+                            </span>
+                        }
+                        action={[
+                            <IconButton onClick={this.onClose} key="close" aria-label="close" color="inherit">
+                                <CloseIcon />
+                            </IconButton>,
+                        ]}
+                    />
+                </Snackbar>
+            </Paper>
         </Container>
     }
 }
