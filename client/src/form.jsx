@@ -180,7 +180,7 @@ export class WebForm extends Component {
         const { name, phoneNo, emailId, jobTitle, resume } = this.state.user;
         const { errorStatus, text } = this.state.message;
         return <Container maxWidth="sm">
-            <Paper style={{ marginTop: '2rem', padding: '4rem' }}>
+            <Paper style={{ marginTop: '2rem', padding: '1rem' }}>
                 <Box m="1rem" display="flex" flexDirection="column">
                     <Box display="flex" justifyContent="flex-end">
                         <span>Visit count : <b>{this.refreshCount}</b></span>
