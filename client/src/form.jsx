@@ -43,12 +43,15 @@ export class WebForm extends Component {
     }
 
     getRefreshCount = () => {
+        const now = new Date();
+        // cookies is valid till 1hr.
+        now.setTime(now.getTime() + (1000 * 3600));
         const refreshCount = Number(document.cookie.split("=")[1]);
         if (!isNaN(refreshCount)) {
-            document.cookie = `refreshCount=${refreshCount + 1};`;
+            document.cookie = `refreshCount=${refreshCount + 1};expires=${now.toGMTString()};`;
             return refreshCount + 1;
         } else {
-            document.cookie = 'refreshCount=1;';
+            document.cookie = `refreshCount=1;expires=${now.toGMTString()};`;
             return 1;
         }
     }
