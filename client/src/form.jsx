@@ -196,6 +196,7 @@ export class WebForm extends Component {
                     </Box>
                     <TextField
                         id="name"
+                        required
                         label="Name"
                         margin="normal"
                         onChange={(e) => {
@@ -205,6 +206,7 @@ export class WebForm extends Component {
                     />
                     <TextField
                         id="phoneNo"
+                        required
                         label="Phone Number"
                         margin="normal"
                         value={phoneNo}
@@ -237,6 +239,7 @@ export class WebForm extends Component {
                         }}
                     />
                     <TextField
+                        required
                         id="jobTitle"
                         label="Job Title"
                         margin="normal"
