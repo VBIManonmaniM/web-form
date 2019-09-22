@@ -279,7 +279,7 @@ export class WebForm extends Component {
                     }}
                     open={this.state.openBar}
                     onClose={this.onClose}
-                    autoHideDuration={3000}
+                    autoHideDuration={2000}
                 >
                     <SnackbarContent
                         className={errorStatus ? 'error-message' : 'success-message'}
