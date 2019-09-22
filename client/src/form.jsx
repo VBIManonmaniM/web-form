@@ -27,10 +27,10 @@ export class WebForm extends Component {
         this.refreshCount = this.getRefreshCount();
         this.state = {
             user: {
-                name: 'Mano',
-                phoneNo: '8898988877',
-                emailId: 'manokrish6@gmail.com',
-                jobTitle: 'Developer',
+                name: '',
+                phoneNo: '',
+                emailId: '',
+                jobTitle: '',
                 resume: null
             },
             message: {
